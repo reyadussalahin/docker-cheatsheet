@@ -36,11 +36,14 @@ Docker Cookbook is here to help you with solving from basic to advanced common d
 <sub>Connect with me in [linkedin](https://www.linkedin.com/in/reyadussalahin/) or say hi to [Twitter](https://twitter.com/reyadussalahin).</sub>
 
 
+
 Introduction
 ===================
+
 Docker is here to make our life easier, from development to testing and deployment. As we all already know, `Docker is a set of platform as a service products that use OS-level virtualization to deliver software in packages called containers.` For convenience, I'd still give a brief decription of what is it:
 
 Docker takes advantage of a few linux kernel constructs, one of them is `namespaces` and another one is `cgroups` to provide resource isolation, thus a virtualized environment for processes to run and communicate.
+
 
 Docker Architecture
 -------------------
@@ -61,6 +64,7 @@ The docker architecture is give below:
 
 Docker objects
 ----------------
+
 When you use Docker, you are creating and using images, containers, networks, volumes, plugins, and other objects. This section is a brief overview of some of those objects.
 
 **Images**
@@ -119,8 +123,10 @@ docker attach <container-id>
 docker rm <container-id>
 ```
 
+
 Executing command from outside
 -------------------------
+
 ```bash
 # executing simple commands
 docker exec <container-id> <command>
@@ -139,8 +145,10 @@ docker exec -it <container-id> <command>
 docker exec -it <container-id> /bin/bash
 ```
 
+
 Creating docker image from container
 -------------------------
+
 ```bash
 docker commit <container-id> <image-name:tag>
 ```
@@ -181,6 +189,54 @@ root@container-id > nginx -v
 ```
 
 
+Publishing port
+-----------------
+
+Sometimes we need to open a port of a docker container in the host operating system, so that other processes can communicate with the docker container.
+
+```bash
+docker run -dit -p <host-port>:<container-port> <image-name:tag>
+```
+
+Example:
+- Running a nginx container and publish the container's port 80 to host os's 5000 port
+```bash
+docker run -dit --name nginx -p 5000:80 nginx
+```
+- Now, you can check if nginx by using the url `http://127.0.0.1:5000/`
+or, you may also use curl
+```bash
+curl 127.0.0.1:5000
+# you'll see the nginx welcome page html here
+```
+
+
+Binding a directory
+---------------------
+
+We can bind a directory of host os with a directory of container using the `-v` flag.
+
+```bash
+docker run -dit -v /path/to/host/dir:/path/to/container/dir <image-name:tag>
+```
+
+Example:
+- Let's create a directory that we want to appear in the container and let it be `./app`
+- Also, create a markdown file in it called `readme.md` inside `./app` directory i.e. `./app/readme.md`
+- add some content to `./app/readme.md`, such as `echo "# My App"`
+- Now, create container from `ubuntu:latest` and share `/usr/src/app` inside the container as follows:
+```bash
+docker run -dit --name ubuntu -v $(pwd)/app:/usr/src/app ubuntu
+```
+- Now, go inside the ubuntu container:
+```bash
+docker exec -it ubuntu /bin/bash
+```
+- And check if readme exists inside `/usr/src/app` directory as follows
+```bash
+root@container-id > cat /usr/src/app/readme.md
+# you'll see the contents of readme.md here
+```
 
 
 ## License
