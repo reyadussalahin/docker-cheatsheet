@@ -1,35 +1,36 @@
-<h1 align="center">Docker Cookbook: from Beginner to Advanced</h1>
+<h1 align="center">Docker Cheatsheet</h1>
 <p align="center">Be ready always</p>
 <p align="center">
     <span>
-        <a href="https://github.com/reyadussalahin/docker-cookbook/blob/main/LICENSE">
-            <img alt="License" src="https://img.shields.io/github/license/reyadussalahin/docker-cookbook?color=green&style=flat">
+        <a href="https://github.com/reyadussalahin/docker-cheatsheet/blob/main/LICENSE">
+            <img alt="License" src="https://img.shields.io/github/license/reyadussalahin/docker-cheatsheet?color=green&style=flat">
         </a>
     </span>
     <span>
-        <a href="https://github.com/reyadussalahin/docker-cookbook/stargazers">
-            <img alt="Stars" src="https://img.shields.io/github/stars/reyadussalahin/docker-cookbook?style=flat&color=magenta">
+        <a href="https://github.com/reyadussalahin/docker-cheatsheet/stargazers">
+            <img alt="Stars" src="https://img.shields.io/github/stars/reyadussalahin/docker-cheatsheet?style=flat&color=magenta">
         </a>
     </span>
     <span>
-        <a href="https://github.com/reyadussalahin/docker-cookbook/network/members">
-            <img alt="Forks" src="https://img.shields.io/github/forks/reyadussalahin/docker-cookbook?style=flat">
+        <a href="https://github.com/reyadussalahin/docker-cheatsheet/network/members">
+            <img alt="Forks" src="https://img.shields.io/github/forks/reyadussalahin/docker-cheatsheet?style=flat">
         </a>
     </span>
     <span>
-        <a href="https://github.com/reyadussalahin/docker-cookbook/pulls">
-            <img alt="PRs" src="https://img.shields.io/github/issues-pr/reyadussalahin/docker-cookbook?style=flat">
+        <a href="https://github.com/reyadussalahin/docker-cheatsheet/pulls">
+            <img alt="PRs" src="https://img.shields.io/github/issues-pr/reyadussalahin/docker-cheatsheet?style=flat">
         </a>
     </span>
     <span>
-        <a href="https://github.com/reyadussalahin/docker-cookbook/issues">
-            <img alt="Issues" src="https://img.shields.io/github/issues/reyadussalahin/docker-cookbook?style=flat&color=orange">
+        <a href="https://github.com/reyadussalahin/docker-cheatsheet/issues">
+            <img alt="Issues" src="https://img.shields.io/github/issues/reyadussalahin/docker-cheatsheet?style=flat&color=orange">
         </a>
     </span>
 </p>
 <hr>
 <p align="center">
-Docker Cookbook is here to help you with solving from basic to advanced common docker problems. It's a recipe for making docker usage as enjoyable as possible in your daily life.
+Docker Cheatsheet is here to help you with solving from basic to advanced common docker problems. It's a recipe for making docker usage as enjoyable as possible in your daily life.
+</p>
 <hr>
 
 
@@ -37,99 +38,84 @@ Docker Cookbook is here to help you with solving from basic to advanced common d
 
 
 
-Introduction
-===================
-
-Docker is here to make our life easier, from development to testing and deployment. As we all already know, `Docker is a set of platform as a service products that use OS-level virtualization to deliver software in packages called containers.` For convenience, I'd still give a brief decription of what is it:
-
-Docker takes advantage of a few linux kernel constructs, one of them is `namespaces` and another one is `cgroups` to provide resource isolation, thus a virtualized environment for processes to run and communicate.
-
-
-Docker Architecture
--------------------
-
-Docker implements `client/server` architecture to provide facilities to docker use. It consists of the following elements:
-
-1. Docker Daemon: The Docker daemon (dockerd) listens for Docker API requests and manages Docker objects such as images, containers, networks, and volumes. A daemon can also communicate with other daemons to manage Docker services.
-
-2. Docker client: The Docker client (docker) is the primary way that many Docker users interact with Docker. When you use commands such as docker run, the client sends these commands to dockerd, which carries them out. The docker command uses the Docker API. The Docker client can communicate with more than one daemon.
-
-3. REST API: The REST API acts as a bridge between the daemon and the client. Any command issued using the client passes through the API to finally reach the daemon.
-
-4. Docker registries: A Docker registry stores Docker images. Docker Hub is a public registry that anyone can use, and Docker is configured to look for images on Docker Hub by default. You can even run your own private registry When you use the docker pull or docker run commands, the required images are pulled from your configured registry. When you use the docker push command, your image is pushed to your configured registry.
-
-The docker architecture is give below:
-![Docker Architecture](https://docs.docker.com/engine/images/architecture.svg)
+Conventions
+===============================
+1. `iname` means `image name`
+2. `cname` means `container name`
+3. `vname` means `volume name`
+4. `nname` means `network name`
+5. `cid` means `container id`
+6. `cport` means `port in container`
+7. `hport` means `port in host`
+8. `cdir` means `directory in container`
+9. `hdir` means `directory in host`
 
 
-Docker objects
-----------------
+Commands
+===============================
 
-When you use Docker, you are creating and using images, containers, networks, volumes, plugins, and other objects. This section is a brief overview of some of those objects.
-
-**Images**
-
-An image is a read-only template with instructions for creating a Docker container. Often, an image is based on another image, with some additional customization. For example, you may build an image which is based on the ubuntu image, but installs the Apache web server and your application, as well as the configuration details needed to make your application run. You might create your own images or you might only use those created by others and published in a registry. To build your own image, you create a Dockerfile with a simple syntax for defining the steps needed to create the image and run it. Each instruction in a Dockerfile creates a layer in the image. When you change the Dockerfile and rebuild the image, only those layers which have changed are rebuilt. This is part of what makes images so lightweight, small, and fast, when compared to other virtualization technologies.
-
-**Containers**
-
-A container is a runnable instance of an image. You can create, start, stop, move, or delete a container using the Docker API or CLI. You can connect a container to one or more networks, attach storage to it, or even create a new image based on its current state.
-
-By default, a container is relatively well isolated from other containers and its host machine. You can control how isolated a container’s network, storage, or other underlying subsystems are from other containers or from the host machine.
-
-A container is defined by its image as well as any configuration options you provide to it when you create or start it. When a container is removed, any changes to its state that are not stored in persistent storage disappear.
-
-
-Docker Basics
-==================
-
-Simple commands
+Image Related
 -----------------
-```bash
-# pull an image from a docker regeistry to local host
-docker pull <image-name:tag>
+```console
+$ docker image pull <iname:tag>                                # pulls an image from a registry
+$ docker image ls                                              # lists images
+$ docker image build -t <iname:tag> .                          # builds an image from Dockerfile in the current directory
+$ docker image build -t <iname:tag> -f <path/to/dockerfile>    # builds an image from dockerfile with given path
+$ docker image rm <iname:tag>                                  # removes an image
+```
 
-# run a container from an image
-docker run <image-name:tag>
+Container Related
+------------------
+```console
+$ docker container run <iname:tag>                         # runs a container with an arbitrary name
+$ docker container run --name <cname> <iname:tag>          # runs a container with a preferred name 
+$ docker container run -it <iname:tag> <command>           # runs a container in interactive mode with a given command
+$ docker container run -d <iname:tag>                      # runs a container in detached mode
+$ docker container run -dit <iname:tag>                    # runs a container in detached interactive mode
+```
 
-# run a container with a preferred name
-docker run --name <container-name> <image-name:tag>
+```console
+$ docker container ls                                      # lists running containers
+$ docker container ps -a                                   # lists all(both running and stopped) containers
+```
 
-# run a container in interactive mode
-docker run -it <image-name:tag>
+```console
+$ docker container stop <cid>                              # stops a container with given container id
+$ docker container stop <cname>                            # stops a container with given container name
+$ docker container start <cid>                             # restarts a stopped container
+$ docker container start <cname>                           # restarts a stopped container
+$ docker container attach <cid>                            # attaches a running docker container
+$ docker container attach <cname>                          # attaches a running docker container
+$ docker container rm <cid>                                # removes a container
+$ docker container rm <cname>                              # removes a container
+```
 
-# run a container in interactive mode with a command
-docker run -it <image-name:tag> <command>
+```console
+$ docker container exec <cid> <command>                    # executes command inside container with given id
+$ docker container exec <cname> <command>                  # executes command inside container with given name
+$ docker container exec -it <cid> <command>                # executes command inside container in interactive mode
+$ docker container exec -it <cname> <command>              # executes command inside container in interactive mode
+```
 
-# run a container in detached more
-docker run -d <image-name:tag>
+```console
+$ docker container run -p <hport>:<cport> <iname:tag>      # publishes a given container port in a given host port
+```
 
-# list running containers
-docker container ls
-
-# list of all created containers
-docker ps -a
-
-# stop a docker container
-docker stop <container-id>
-
-# restart a stopped container
-docker start <container-id>
-
-# attach to a running docker container
-docker attach <container-id>
-
-# removing a docker container
-docker rm <container-id>
+```console
+$ docker container run -v /path/to/hdir:/path/to/cdir <iname:tag>    # binds a given host dir to a given container dir
 ```
 
 
-Executing command from outside
--------------------------
 
-```bash
+<!-- Examples -->
+
+
+<!-- Executing command from outside
+------------------------- -->
+
+<!-- ```bash
 # executing simple commands
-docker exec <container-id> <command>
+
 
 # examples
 docker exec <container-id> echo  "hello, world!"
@@ -139,17 +125,17 @@ docker exec <container-id> ls -la /
 
 ```bash
 # executing interactive commands
-docker exec -it <container-id> <command>
+
 
 # examples
 docker exec -it <container-id> /bin/bash
-```
+``` -->
 
 
-Creating docker image from container
--------------------------
+<!-- Creating docker image from container
+------------------------- -->
 
-```bash
+<!-- ```bash
 docker commit <container-id> <image-name:tag>
 ```
 Example - Creating a nginx image from a container:
@@ -186,13 +172,13 @@ docker run -it --name awesome-ubuntu-with-nginx ubuntu-with-nginx /bin/bash
 ```bash
 root@container-id > nginx -v
 # you'd see nginx version
-```
+``` -->
 
 
-Publishing port
------------------
+<!-- Publishing port
+----------------- -->
 
-Sometimes we need to open a port of a docker container in the host operating system, so that other processes can communicate with the docker container.
+<!-- Sometimes we need to open a port of a docker container in the host operating system, so that other processes can communicate with the docker container.
 
 ```bash
 docker run -dit -p <host-port>:<container-port> <image-name:tag>
@@ -208,13 +194,13 @@ or, you may also use curl
 ```bash
 curl 127.0.0.1:5000
 # you'll see the nginx welcome page html here
-```
+``` -->
 
 
-Binding a directory
----------------------
+<!-- Binding a directory
+--------------------- -->
 
-We can bind a directory of host os with a directory of container using the `-v` flag.
+<!-- We can bind a directory of host os with a directory of container using the `-v` flag.
 
 ```bash
 docker run -dit -v /path/to/host/dir:/path/to/container/dir <image-name:tag>
@@ -236,7 +222,7 @@ docker exec -it ubuntu /bin/bash
 ```bash
 root@container-id > cat /usr/src/app/readme.md
 # you'll see the contents of readme.md here
-```
+``` -->
 
 
 ## License
