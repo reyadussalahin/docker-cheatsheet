@@ -76,6 +76,9 @@ $ docker image rm <iname>                            # removes image
 
 Container Related
 ------------------
+
+**Running Container**
+
 ```console
 $ docker container run <iname>                  # runs container with an arbitrary name
 $ docker container run --name <cname> <iname>   # runs container with a preferred name 
@@ -84,10 +87,14 @@ $ docker container run -d <iname>               # runs container in detached mod
 $ docker container run -dit <iname>             # runs container in detached interactive mode
 ```
 
+**Lisiting Containers**
+
 ```console
 $ docker container ls                           # lists running containers
 $ docker container ps -a                        # lists all(both running and stopped) containers
 ```
+
+**Start, Stop, Attach and Removing Container**
 
 ```console
 $ docker container stop <cid>                   # stops a container with given container id
@@ -100,6 +107,8 @@ $ docker container rm <cid>                     # removes a container
 $ docker container rm <cname>                   # removes a container
 ```
 
+**Executing command inside Container**
+
 ```console
 $ docker container exec <cid> <cmd>         # executes cmd inside container with given id
 $ docker container exec <cname> <cmd>       # executes cmd inside container with given name
@@ -107,9 +116,13 @@ $ docker container exec -it <cid> <cmd>     # executes cmd inside container in i
 $ docker container exec -it <cname> <cmd>   # executes cmd inside container in interactive mode
 ```
 
+**Publishing Ports**
+
 ```console
 $ docker container run -p <hport>:<cport> <iname>        # publishes container port in host port
 ```
+
+**Binding directories**
 
 ```console
 $ docker container run -v /p/t/hdir:/p/t/cdir <iname>    # binds host dir to container dir
