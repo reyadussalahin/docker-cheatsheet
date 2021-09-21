@@ -38,9 +38,18 @@ Docker Cheatsheet is here to help you with solving from basic to advanced common
 
 
 
+Contents
+===============================
+- [Conventions](#conventions)
+- [Commands](#commands)
+  - [Image Related](#image-related)
+  - [Container Related](#container-related)
+
+
+
 Conventions
 ===============================
-1. `iname` means `image name`
+1. `iname` means `image name with tag`
 2. `cname` means `container name`
 3. `vname` means `volume name`
 4. `nname` means `network name`
@@ -49,6 +58,7 @@ Conventions
 7. `hport` means `port in host`
 8. `cdir` means `directory in container`
 9. `hdir` means `directory in host`
+10. `/p/t/` means `/path/to/`
 
 
 Commands
@@ -57,52 +67,52 @@ Commands
 Image Related
 -----------------
 ```console
-$ docker image pull <iname:tag>                                # pulls an image from a registry
-$ docker image ls                                              # lists images
-$ docker image build -t <iname:tag> .                          # builds an image from Dockerfile in the current directory
-$ docker image build -t <iname:tag> -f <path/to/dockerfile>    # builds an image from dockerfile with given path
-$ docker image rm <iname:tag>                                  # removes an image
+$ docker image pull <iname>                          # pulls image from registry
+$ docker image ls                                    # lists images
+$ docker image build -t <iname> .                    # builds image from Dockerfile in current dir
+$ docker image build -t <iname> -f </p/t/dockerfile> # builds image from dockerfile with given path
+$ docker image rm <iname>                            # removes image
 ```
 
 Container Related
 ------------------
 ```console
-$ docker container run <iname:tag>                         # runs a container with an arbitrary name
-$ docker container run --name <cname> <iname:tag>          # runs a container with a preferred name 
-$ docker container run -it <iname:tag> <command>           # runs a container in interactive mode with a given command
-$ docker container run -d <iname:tag>                      # runs a container in detached mode
-$ docker container run -dit <iname:tag>                    # runs a container in detached interactive mode
+$ docker container run <iname>                  # runs container with an arbitrary name
+$ docker container run --name <cname> <iname>   # runs container with a preferred name 
+$ docker container run -it <iname> <cmd>        # runs container in interactive mode with given cmd
+$ docker container run -d <iname>               # runs container in detached mode
+$ docker container run -dit <iname>             # runs container in detached interactive mode
 ```
 
 ```console
-$ docker container ls                                      # lists running containers
-$ docker container ps -a                                   # lists all(both running and stopped) containers
+$ docker container ls                           # lists running containers
+$ docker container ps -a                        # lists all(both running and stopped) containers
 ```
 
 ```console
-$ docker container stop <cid>                              # stops a container with given container id
-$ docker container stop <cname>                            # stops a container with given container name
-$ docker container start <cid>                             # restarts a stopped container
-$ docker container start <cname>                           # restarts a stopped container
-$ docker container attach <cid>                            # attaches a running docker container
-$ docker container attach <cname>                          # attaches a running docker container
-$ docker container rm <cid>                                # removes a container
-$ docker container rm <cname>                              # removes a container
+$ docker container stop <cid>                   # stops a container with given container id
+$ docker container stop <cname>                 # stops a container with given container name
+$ docker container start <cid>                  # restarts a stopped container
+$ docker container start <cname>                # restarts a stopped container
+$ docker container attach <cid>                 # attaches a running docker container
+$ docker container attach <cname>               # attaches a running docker container
+$ docker container rm <cid>                     # removes a container
+$ docker container rm <cname>                   # removes a container
 ```
 
 ```console
-$ docker container exec <cid> <command>                    # executes command inside container with given id
-$ docker container exec <cname> <command>                  # executes command inside container with given name
-$ docker container exec -it <cid> <command>                # executes command inside container in interactive mode
-$ docker container exec -it <cname> <command>              # executes command inside container in interactive mode
+$ docker container exec <cid> <cmd>         # executes cmd inside container with given id
+$ docker container exec <cname> <cmd>       # executes cmd inside container with given name
+$ docker container exec -it <cid> <cmd>     # executes cmd inside container in interactive mode
+$ docker container exec -it <cname> <cmd>   # executes cmd inside container in interactive mode
 ```
 
 ```console
-$ docker container run -p <hport>:<cport> <iname:tag>      # publishes a given container port in a given host port
+$ docker container run -p <hport>:<cport> <iname>        # publishes container port in host port
 ```
 
 ```console
-$ docker container run -v /path/to/hdir:/path/to/cdir <iname:tag>    # binds a given host dir to a given container dir
+$ docker container run -v /p/t/hdir:/p/t/cdir <iname>    # binds host dir to container dir
 ```
 
 
